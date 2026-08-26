@@ -1,0 +1,1 @@
+import commentModel from "../models/comment.model.js";
