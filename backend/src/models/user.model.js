@@ -30,6 +30,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Password is required"],
       trim: true,
+      select: false,
     },
     role: {
       type: String,
@@ -42,6 +43,7 @@ const userSchema = new mongoose.Schema(
     refreshToken: {
       type: String,
       default: "",
+      select: false,
     },
     isEmailVerified: {
       type: Boolean,
@@ -49,16 +51,20 @@ const userSchema = new mongoose.Schema(
     },
     emailVerificationToken: {
       type: String,
+      select: false,
     },
     emailVerificationTokenExpiry: {
       type: Date,
+      select: false,
     },
 
     resetPasswordToken: {
       type: String,
+      select: false,
     },
     resetPasswordTokenExpiry: {
       type: Date,
+      select: false,
     },
   },
   {
