@@ -1,387 +1,198 @@
-# Insta Clone
+# Social Media Backend
 
-## Core Features
+A social media backend inspired by Instagram, built with Node.js, Express, TypeScript, and MongoDB. The project focuses on user authentication, profile management, database design, and building reliable REST APIs.
 
-### MVP
+## Tech Stack
 
-👤 **Authentication**
+- **Runtime:** Node.js
+- **Language:** TypeScript
+- **Backend Framework:** Express.js
+- **Database:** MongoDB
+- **ODM:** Mongoose
+- **Authentication:** JSON Web Tokens (JWT)
+- **Password Hashing:** bcryptjs
 
-- Signup
-- Login
-- Logout
-- JWT authentication
-- Password hashing (bcrypt)
-- Email verification (optional)
+## Features
 
-👤 **User Profile**
+### Currently in Development
 
-- Profile photo
-- Bio
-- Followers / Following
-- Edit profile
-- View other users
+- User model and database connection
+- Environment variable configuration
+- Password hashing with bcryptjs
+- Password comparison for login
+- JWT access and refresh token generation
+- User profile fields and privacy settings
 
-📸 **Posts**
+### Planned Features
 
-- Upload image/video
-- Caption
-- Like post
-- Delete post
-- View post
+- User registration and login APIs
+- User profile management
+- Follow and unfollow users
+- Create, update, and delete posts
+- Like and unlike posts
+- Comments and replies
+- Save and share posts
+- User feed and pagination
+- Image uploads
+- Private account support
+- Post and user statistics
 
-❤️ **Engagement**
+> Features will be marked as completed as they are implemented and tested.
 
-- Like / Unlike
-- Comments
-- Reply to comments
+## Getting Started
 
-📰 **Feed**
+Follow these steps to set up the project locally.
 
-- Show posts from followed users
-- Infinite scrolling
-- Sorting by latest
+### Prerequisites
 
-🔍 **Search**
+Make sure you have installed:
 
-- Search users
-- Search hashtags
+- [Node.js](https://nodejs.org/)
+- npm
+- [MongoDB](https://www.mongodb.com/) or a MongoDB Atlas account
+- Git
 
-👥 **Follow System**
+### Installation
 
-- Follow user
-- Unfollow user
-- Followers list
-- Following list
-
-🔔 **Notifications**
-
-- Someone liked your post
-- Someone followed you
-- Someone commented
-
-### Advanced Features
-
-- Stories
-- Reels
-- Real-time chat
-- Typing indicators
-- Push notifications
-- Save posts
-- Tag users
-- Hashtags
-- Explore page
-- AI recommendation feed
-
-### Tech Stack
-
-Frontend
-
-- React
-- Tailwind CSS
-- Redux / Zustand
-- React Query
-
-Backend
-
-- Node.js
-- Express.js
-
-Database
-
-- MongoDB
-
-Media Storage
-
-- Cloudinary
-- AWS S3
-
-Authentication
-
-- JWT
-- Cookies
-
-Real-time
-
-- Socket.io
-
-Deployment
-
-- Frontend → Vercel
-- Backend → Render / AWS / Railway
-- Database → MongoDB Atlas
-
-## Database Design
-
-***Users***
-
-```json
-users
-{
-  "_id": "ObjectId",
-  "username": "krish",
-  "email": "krish@gmail.com",
-  "passwordHash": "hashed_password",
-  "fullName": "Krish Kumar",
-  "bio": "Software Engineer",
-  "profilePicture": "url",
-  "website": "optional",
-  "isPrivate": false,
-  "isVerified": false,
-  "createdAt": "Date",
-  "updatedAt": "Date"
-}
-```
-
-Indexes
-
-```code
-username (unique)
-email (unique)
-```
-
-***user stats***
-
-```json
-user_stats
-{
-  _id: ObjectId,
-  userId: ObjectId,
-  followersCount: 120,
-  followingCount: 90,
-  postsCount: 34
-}
-```
-
-***Follows Collection***
-
-```json
-follows
-{
-  _id: ObjectId,
-  followerId: ObjectId,
-  followingId: ObjectId,
-  createdAt: Date
-}
-```
-
-Indexes
-followerId
-followingId
-followerId + followingId (unique)
-
-***Posts***
-
-```json
-posts
-{
-  _id: ObjectId,
-  userId: ObjectId,
-  caption: "Beautiful sunset",
-  location: "Delhi",
-  mediaType: "image",
-  mediaUrl: "cloudinary_url",
-  createdAt: Date,
-  updatedAt: Date
-}
-```
-
-indexes
-userId
-createdAt
-
-***post stats***
-```json
-post_stats
-{
-  _id: ObjectId,
-  postId: ObjectId,
-  likesCount: 230,
-  commentsCount: 45,
-  sharesCount: 12
-}
-```
-
-***like***
-
-```json
-likes
-{
-  _id: ObjectId,
-  userId: ObjectId,
-  postId: ObjectId,
-  createdAt: Date
-}
-```
-
-index
-postId
-userId
-postId + userId (unique)
-
-***Comments***
-
-```json
-comments
-{
-  _id: ObjectId,
-  postId: ObjectId,
-  userId: ObjectId,
-  text: "Nice photo!",
-  parentCommentId: ObjectId | null,
-  createdAt: Date
-}
-```
-
-***Notifications***
-
-```json
-notifications
-{
-  _id: ObjectId,
-  recipientId: ObjectId,
-  senderId: ObjectId,
-  type: "like" | "comment" | "follow",
-  postId: ObjectId | null,
-  isRead: false,
-  createdAt: Date
-}
-```
-
-***stories***
-```json
-stories
-{
-  _id: ObjectId,
-  userId: ObjectId,
-  mediaUrl: "url",
-  mediaType: "image",
-  expiresAt: Date,
-  createdAt: Date
-}
-```
-
-***messages***
-
-```json
-messages
-{
-  _id: ObjectId,
-  conversationId: ObjectId,
-  senderId: ObjectId,
-  text: "Hello",
-  mediaUrl: null,
-  createdAt: Date
-}
-```
-
-***conversation***
-```json
-conversations
-{
-  _id: ObjectId,
-  participants: [userId1, userId2],
-  createdAt: Date
-}
-```
-
-**index**
-users.username
-users.email
-
-posts.userId
-posts.createdAt
-
-likes.postId
-likes.userId
-
-comments.postId
-
-follows.followerId
-follows.followingId
-
-notifications.recipientId
-
-## API Design
-
-***Auth***
+**1. Clone the repository**
 
 ```bash
-POST /api/auth/signup
-POST /api/auth/login
-POST /api/auth/logout
+git clone <your-repository-url>
 ```
 
-***Users***
+**2. Open the project directory**
 
 ```bash
-GET /api/users/:id
-PUT /api/users/update
-GET /api/users/search
+cd <your-project-folder>
 ```
 
-***Posts***
+**3. Install dependencies**
 
 ```bash
-POST /api/posts/create
-GET /api/posts/feed
-GET /api/posts/:id
-DELETE /api/posts/:id
+npm install
 ```
 
-***Engagement***
+**4. Configure environment variables**
+
+Create a `.env` file in the project root.
+
+```env
+PORT=5000
+MONGO_URI=mongodb://127.0.0.1:27017/social_media
+
+ACCESS_TOKEN_SECRET=your_access_token_secret
+ACCESS_TOKEN_EXPIRY=15m
+
+REFRESH_TOKEN_SECRET=your_refresh_token_secret
+REFRESH_TOKEN_EXPIRY=7d
+
+NODE_ENV=development
+```
+
+Replace the example secrets with strong, randomly generated values.
+
+**5. Start the development server**
+
+Use the development command configured in your `package.json`. For example, if your project has a `dev` script:
 
 ```bash
-POST /api/posts/:id/like
-POST /api/posts/:id/comment
-POST /api/users/:id/follow
+npm run dev
 ```
 
-## Folder Structure
+> The exact scripts depend on your project configuration. Make sure the script exists in `package.json` before using it.
 
-```bash
-backend
- ┣ controllers
- ┣ models
- ┣ routes
- ┣ middleware
- ┣ utils
- ┣ config
- ┣ app.js
- ┗ server.js
+## Environment Variables
 
-frontend
- ┣ components
- ┣ pages
- ┣ hooks
- ┣ services (API calls)
- ┣ context / redux
- ┗ App.jsx
+| Variable | Description |
+| --- | --- |
+| `PORT` | Port used by the Express server |
+| `MONGO_URI` | MongoDB connection string |
+| `ACCESS_TOKEN_SECRET` | Secret used to sign access tokens |
+| `ACCESS_TOKEN_EXPIRY` | Access token lifetime |
+| `REFRESH_TOKEN_SECRET` | Secret used to sign refresh tokens |
+| `REFRESH_TOKEN_EXPIRY` | Refresh token lifetime |
+| `NODE_ENV` | Application environment |
+
+Never commit your `.env` file or expose your secret keys in the repository.
+
+## Project Structure
+
+The backend is organized into separate modules to keep database logic, request handling, and application configuration easy to maintain.
+
+```text
+src/
+├── config/
+│   ├── db.ts
+│   └── env.ts
+├── models/
+│   └── user.model.ts
+├── controllers/
+├── routes/
+├── middlewares/
+├── services/
+├── utils/
+├── app.ts
+└── server.ts
 ```
 
-## System Architecture
+The structure may change as new features are added.
 
-```code
-Client (React)
-      |
-      |
-API Requests
-      |
-Node.js / Express
-      |
-      |
-Database (MongoDB)
-      |
-Media Storage (Cloudinary / S3)
-```
+## Authentication
 
-## Advanced
+The project uses JSON Web Tokens for authentication and bcryptjs for password hashing.
 
-- Rate limiting
-- JWT refresh tokens
-- Redis caching
-- Feed algorithm
-- Image compression
-- Pagination
-- Lazy loading
-- CDN for images
-- Background jobs (BullMQ)
+- **Access tokens** are used to authenticate protected requests.
+- **Refresh tokens** are intended to support issuing new access tokens.
+- Passwords are hashed before being stored in the database.
+
+Token expiry, storage, rotation, and revocation will be handled as part of the authentication implementation.
+
+## Database
+
+MongoDB is used to store application data, with Mongoose providing schemas, models, and database operations.
+
+The user model includes fields for:
+
+- Username and email
+- Password hash
+- Full name and bio
+- Profile picture and website
+- Account privacy and verification status
+- Refresh token storage
+
+Timestamps are enabled to track document creation and updates.
+
+## API Documentation
+
+API documentation will be added as the routes are implemented. Each endpoint will document its HTTP method, path, authentication requirements, request body, response format, and possible errors.
+
+## Security
+
+The project aims to follow these security practices:
+
+- Store password hashes instead of plain-text passwords.
+- Keep secrets in environment variables.
+- Protect private routes with authentication middleware.
+- Validate incoming request data.
+- Handle duplicate usernames and email addresses.
+- Use appropriate HTTP status codes and error responses.
+- Protect sensitive user fields from unauthorized updates.
+
+## Future Improvements
+
+- Automated tests
+- API documentation with Swagger/OpenAPI
+- Image upload and media processing
+- Efficient feed generation and cursor pagination
+- Better database indexing
+- Refresh token rotation and session management
+- Rate limiting and additional security controls
+- Docker-based development and deployment
+
+## License
+
+A license has not been selected yet. Add a `LICENSE` file before distributing the project under specific reuse terms.
+
+---
+
+Built as a hands-on backend engineering project to learn API development, authentication, database modeling, and scalable application design.
