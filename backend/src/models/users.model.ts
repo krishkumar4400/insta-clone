@@ -3,29 +3,8 @@ import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import { env } from "../config/env.js";
 import { Model } from "mongoose";
-import type { SignOptions } from "jsonwebtoken";
 import type { StringValue } from "ms";
-
-// 1. User document fields
-interface IUser {
-  username: string;
-  email: string;
-  passwordHash: string;
-  fullName?: string;
-  bio?: string;
-  profilePicture?: string;
-  website?: string;
-  isPrivate: boolean;
-  isVerified: boolean;
-  refreshToken?: string;
-}
-
-// 2. Custom document methods
-interface IUserMethods {
-  comparePassword(candidatePassword: string): Promise<boolean>;
-  generateAccessToken(): string;
-  generateRefreshToken(): string;
-}
+import type { IUser, IUserMethods } from "../types/models.types.js";
 
 // 3. Typed mongoose model
 type UserModel = Model<IUser, {}, IUserMethods>;
